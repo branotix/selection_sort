@@ -51,5 +51,11 @@ func main() {
 	for i := 0; i <= 10; i++ {
 		fmt.Println("added")
 	}
+
+	var sum int = 0
+	for i := 0; i <= 100; i++ {
+		sum += i
+	}
+	fmt.Println(sum)
 	fmt.Printf("Successfully saved %d lines to first_50k.txt\n", count)
 }
