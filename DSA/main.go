@@ -48,5 +48,8 @@ func main() {
 		return
 	}
 
+	for i := 0; i <= 10; i++ {
+		fmt.Println("added")
+	}
 	fmt.Printf("Successfully saved %d lines to first_50k.txt\n", count)
 }
