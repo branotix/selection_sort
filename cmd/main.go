@@ -1,9 +1,7 @@
 package main
 
-// type gameInfo struct {
-// 	var carName 
-// }
+import "fmt"
 
 func main() {
-	var carName[]string = {"a","b","c"}
+	fmt.Println("Pulock Is Not Good For Every Where")
 }
