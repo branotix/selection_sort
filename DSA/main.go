@@ -3,59 +3,70 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
+	"strconv"
+	"time"
 )
 
+func selectionSort(arr []int) {
+	n := len(arr)
+	for i := 0; i < n-1; i++ {
+		minIndex := i
+		for j := i + 1; j < n; j++ {
+			if arr[j] < arr[minIndex] {
+				minIndex = j
+			}
+		}
+		arr[i], arr[minIndex] = arr[minIndex], arr[i]
+	}
+}
+
 func main() {
-	inputFile, err := os.Open("data.txt")
+
+	file, err := os.Open("50k_data.txt")
 	if err != nil {
-		fmt.Println("Error opening input file:", err)
+		fmt.Println("Error opening file:", err)
 		return
 	}
-	defer inputFile.Close()
-	outputFile, err := os.Create("250k_data.txt")
+	defer file.Close()
+
+	var numbers []int
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		val, err := strconv.Atoi(scanner.Text())
+		if err == nil {
+			numbers = append(numbers, val)
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	startTime := time.Now()
+	selectionSort(numbers)
+	duration := time.Since(startTime)
+
+	fmt.Printf("Sorting completed Time taken: %v\n", duration)
+
+	outputFile, err := os.Create("sorted_50k.txt")
 	if err != nil {
 		fmt.Println("Error creating output file:", err)
 		return
 	}
 	defer outputFile.Close()
 
-	scanner := bufio.NewScanner(inputFile)
 	writer := bufio.NewWriter(outputFile)
 	defer writer.Flush()
 
-	count := 0
-	target := 250000
-
-	for scanner.Scan() {
-		if count >= target {
-			break
-		}
-
-		// প্রতি লাইনের ডাটা এবং একটি নতুন লাইন (\n) রাইট করা হচ্ছে
-		_, err := writer.WriteString(scanner.Text() + "\n")
+	for _, num := range numbers {
+		_, err := writer.WriteString(strconv.Itoa(num) + "\n")
 		if err != nil {
 			fmt.Println("Error writing to file:", err)
 			return
 		}
-
-		count++
 	}
 
-	// কোনো রিডিং এরর আছে কিনা চেক করা
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading file:", err)
-		return
-	}
-
-	for i := 0; i <= 10; i++ {
-		fmt.Println("added")
-	}
-
-	var sum int = 0
-	for i := 0; i <= 100; i++ {
-		sum += i
-	}
-	fmt.Println(sum)
-	fmt.Printf("Successfully saved %d lines to first_50k.txt\n", count)
+	fmt.Println("successed")
 }
