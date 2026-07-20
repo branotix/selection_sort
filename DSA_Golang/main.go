@@ -24,7 +24,7 @@ func selectionSort(arr []int) {
 
 func main() {
 
-	file, err := os.Open("./Random/250k_data.txt")
+	file, err := os.Open("./Sorted_Data/sorted_250k.txt")
 	if err != nil {
 		fmt.Println("Error opening file:", err)
 		return
@@ -50,23 +50,24 @@ func main() {
 
 	fmt.Printf("Sorting completed Time taken: %v\n", duration)
 
-	outputFile, err := os.Create("sorted_250k.txt")
-	if err != nil {
-		fmt.Println("Error creating output file:", err)
-		return
-	}
-	defer outputFile.Close()
-
-	writer := bufio.NewWriter(outputFile)
-	defer writer.Flush()
-
-	for _, num := range numbers {
-		_, err := writer.WriteString(strconv.Itoa(num) + "\n")
-		if err != nil {
-			fmt.Println("Error writing to file:", err)
-			return
-		}
-	}
-
-	fmt.Println("successed")
 }
+
+// outputFile, err := os.Create("sorted_250k.txt")
+// 	if err != nil {
+// 		fmt.Println("Error creating output file:", err)
+// 		return
+// 	}
+// 	defer outputFile.Close()
+
+// 	writer := bufio.NewWriter(outputFile)
+// 	defer writer.Flush()
+
+// 	for _, num := range numbers {
+// 		_, err := writer.WriteString(strconv.Itoa(num) + "\n")
+// 		if err != nil {
+// 			fmt.Println("Error writing to file:", err)
+// 			return
+// 		}
+// 	}
+
+// 	fmt.Println("successed")
